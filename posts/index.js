@@ -19,12 +19,11 @@ app.post('/posts', async (req, res) => {
 	const id = randomBytes(4).toString('hex');
 	const { title } = req.body;
 
-	const post = {id, title};
-	posts[id] = post;
+	posts[id] = {id, title};
 
 	await axios.post('http://localhost:4005/events', {
 		type: 'PostCreated',
-		data: post
+		data: {id, title}
 	});
 
 	res.status(201).send(posts[id]);
